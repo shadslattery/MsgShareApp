@@ -1,6 +1,7 @@
 package com.smartherd.msgshareapp
 
 import android.app.ProgressDialog.show
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -18,6 +19,16 @@ class MainActivity : AppCompatActivity() {
             Log.i("MainActivity", "Button was clicked !")
 
         Toast.makeText(this,"Button was clicked !",Toast.LENGTH_SHORT).show()
+        }
+
+        btnSendMsgToNextActivity.setOnClickListener {
+            Toast.makeText(this,"Second Button was clicked !",Toast.LENGTH_SHORT).show()
+
+            val message: String = etUserMessage.text.toString()
+            Toast.makeText(this,message,Toast.LENGTH_SHORT).show()
+
+            val intent = Intent(this, SecondActivity::class.java)
+            startActivity(intent)
         }
 
     }
