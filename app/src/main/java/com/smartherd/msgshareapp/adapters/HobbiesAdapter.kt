@@ -1,4 +1,4 @@
-package com.smartherd.msgshareapp
+package com.smartherd.msgshareapp.adapters
 
 import android.content.Context
 import android.content.Intent
@@ -7,9 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.smartherd.msgshareapp.R
+import com.smartherd.msgshareapp.extensions.showToast
+import com.smartherd.msgshareapp.models.Hobby
 import kotlinx.android.synthetic.main.list_item.view.*
 
-class HobbiesAdapter(val context: Context, val hobbies: List<Hobby>) :
+class HobbiesAdapter(val context: Context, private val hobbies: List<Hobby>) :
     RecyclerView.Adapter<HobbiesAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -27,34 +30,28 @@ class HobbiesAdapter(val context: Context, val hobbies: List<Hobby>) :
     }
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
         var currentHobby: Hobby? = null
         var currentPosition: Int = 0
 
         init {
             itemView.setOnClickListener {
-                Toast.makeText(context, currentHobby!!.title + "   Clicked ! ", Toast.LENGTH_SHORT)
-                    .show()
+               context.showToast(currentHobby!!.title + "   Clicked ! ")
+                /*Toast.makeText(context, currentHobby!!.title + "   Clicked ! ", Toast.LENGTH_SHORT)
+                    .show()*/
             }
 
             itemView.imgShare.setOnClickListener {
 
-
                 val message: String = "My hobby is: " + currentHobby!!.title
-
                 val intent = Intent()
                 intent.action = Intent.ACTION_SEND
                 intent.putExtra(Intent.EXTRA_TEXT, message)
                 intent.type = "text/plain"
-
                 context.startActivity(Intent.createChooser(intent, "Select an App to Share To : "))
             }
-
         }
-
         fun setData(hobby: Hobby?, pos: Int) {
             itemView.txvTitle.text = hobby!!.title
-
             this.currentHobby = hobby
             this.currentPosition = pos
         }
